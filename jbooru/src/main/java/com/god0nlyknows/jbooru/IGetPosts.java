@@ -1,10 +1,12 @@
 package com.god0nlyknows.jbooru;
 
+import java.util.List;
+
 import com.god0nlyknows.jbooru.dto.IResponseDTO;
 
 public interface IGetPosts {
 
-    public IResponseDTO[] getPosts(String tag);
+    public List<IResponseDTO> getPosts(String tag);
     
     public int getLimit();
 

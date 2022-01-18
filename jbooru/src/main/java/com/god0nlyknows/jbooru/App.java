@@ -2,21 +2,30 @@ package com.god0nlyknows.jbooru;
 
 import java.util.List;
 
+import com.god0nlyknows.jbooru.dto.IResponseDTO;
+
 public class App 
 {
     public static void main( String[] args )
     {
         List<IGetPosts> r34 = List.of(
+            new DanbooruGetPosts(), 
+            new E621GetPosts(), 
+            new E926GetPosts(), 
+            new GelbooruGetPosts(), 
+            new KonachanGetPosts(), 
             new LolibooruGetPosts(),
+            new R34GetPosts(), 
+            new RealbooruGetPosts(), 
             new YandeGetPosts()
         );
         for (IGetPosts iGetPosts : r34) {
             try {
-                var res = iGetPosts.getPosts("thighhighs");
-            System.out.println(res[0].getFileUrl());
+                List<IResponseDTO> res = iGetPosts.getPosts("thighhighs");
+            System.out.println(res.get(0).getFileUrl());
             iGetPosts.setPage(2);
             res = iGetPosts.getPosts("thighhighs");
-            System.out.println(res[0].getFileUrl());
+            System.out.println(res.get(0).getFileUrl());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.god0nlyknows.jbooru.dto.GelbooruResponseDTO;
@@ -16,13 +17,13 @@ public class GelbooruGetPosts extends GetPostsBase implements IGetPosts {
 
 
     @Override
-    public IResponseDTO[] getPosts(String tag) {
+    public List<IResponseDTO> getPosts(String tag) {
 
         return sendRequest(String.format("https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=%s&pid=%s&tags=%s",limit,page,tag), GelbooruResponseDTO.class);
     }
 
     @Override
-    public <T> IResponseDTO[] sendRequest(String url, Class<T> clazz){
+    public <T> List<IResponseDTO> sendRequest(String url, Class<T> clazz){
         var client = HttpClient.newHttpClient();
 
         var request = HttpRequest.newBuilder(
@@ -34,7 +35,7 @@ public class GelbooruGetPosts extends GetPostsBase implements IGetPosts {
             ObjectMapper om=new ObjectMapper();
             var result = (GelbooruResponseDTO)om.readValue(response.body().toString(),clazz);
 
-            return result.getPost();
+            return List.of(result.getPost());
             
         } catch (Exception e) {
             return null;

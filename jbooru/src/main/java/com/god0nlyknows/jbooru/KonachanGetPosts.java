@@ -1,5 +1,7 @@
 package com.god0nlyknows.jbooru;
 
+import java.util.List;
+
 import com.god0nlyknows.jbooru.dto.IResponseDTO;
 import com.god0nlyknows.jbooru.dto.KonachanResponseDTO;
 
@@ -10,7 +12,7 @@ public class KonachanGetPosts extends GetPostsBase implements IGetPosts {
 
 
     @Override
-    public IResponseDTO[] getPosts(String tag) {
+    public List<IResponseDTO> getPosts(String tag) {
 
         return sendRequest(String.format("https://konachan.com/post.json?limit=%s&page=%s&tags=%s",limit,page,tag), KonachanResponseDTO[].class);
     }

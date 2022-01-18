@@ -1,5 +1,14 @@
 package com.god0nlyknows.jbooru;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.god0nlyknows.jbooru.dto.E621ResponseDTO;
 import com.god0nlyknows.jbooru.dto.IResponseDTO;
 
@@ -10,12 +19,46 @@ public class E621GetPosts extends GetPostsBase implements IGetPosts {
 
 
     @Override
-    public IResponseDTO[] getPosts(String tag) {
+    public List<IResponseDTO> getPosts(String tag) {
 
         return sendRequest(String.format("https://e621.net/posts.json?limit=%s&page=%s&tags=%s",limit,page,tag), E621ResponseDTO[].class);
     }
 
+    @Override
+    public <T> List<IResponseDTO> sendRequest(String url, Class<T> clazz) {
+        var client = HttpClient.newHttpClient();
+
+        var request = HttpRequest.newBuilder(
+                URI.create(url))
+                .header("accept", "application/json")
+                .build();
+                JsonNode jsonResponse = null;
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            ObjectMapper om=new ObjectMapper();
+            jsonResponse = om.readTree(response.body());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            List<IResponseDTO> posts = new ArrayList<IResponseDTO>();
+            for (JsonNode node : jsonResponse.get("posts")) {
+                posts.add(new E621ResponseDTO(
+                        node.get("file").get("url").textValue(),
+                        node.get("score").get("total").textValue(),
+                        node.get("rating").textValue(),
+                        getAllStrings(node.get("tags").get("artist")," "),
+                        getAllStrings(node.get("sources")," "),
+                        getAllStrings(node.get("tags").get("character")," ") +" "+ getAllStrings(node.get("tags").get("general")," ") +" "+ getAllStrings(node.get("tags").get("meta")," ") +" "+ getAllStrings(node.get("tags").get("species")," ") 
+                        
+                        ));
+
+                return posts;
+            }
+        
+        return null;
+    }
     
+
     public int getLimit() {
         return limit;
     }
