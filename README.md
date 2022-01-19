@@ -1,5 +1,5 @@
 # JBooru
-A package that download a crucial info about posts from booru sites
+A package that download a crucial info about posts from most popular booru sites
 
 
 ### Example Usage
@@ -34,3 +34,18 @@ A package that download a crucial info about posts from booru sites
 
         }
 ```
+
+### Available Sites
+
+<ul>
+  <li> danbooru.donmai.us </li>
+  <li> e621.net </li>
+  <li> e926.net </li>
+  <li> gelbooru.com </li>
+  <li> konachan.com </li>
+  <li> lolibooru.moe </li>
+  <li> realbooru.com </li>
+  <li> rule34.xxx </li>
+  <li> safebooru.org </li>
+  <li> yande.re </li>
+</ul>
