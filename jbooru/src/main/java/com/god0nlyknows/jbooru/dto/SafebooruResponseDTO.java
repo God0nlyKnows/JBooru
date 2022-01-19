@@ -2,8 +2,9 @@ package com.god0nlyknows.jbooru.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RealbooruResponseDTO implements IResponseDTO {
-    private int directory;
+public class SafebooruResponseDTO implements IResponseDTO {
+    private final String baseFileUrl = "https://safebooru.org/samples/";
+    private String directory;
     private String hash;
     private int height;
     private int id;
@@ -12,7 +13,7 @@ public class RealbooruResponseDTO implements IResponseDTO {
     private String owner;
     private int parent_id;
     private String rating;
-    private int sample;
+    private boolean sample;
     private int sample_height;
     private int sample_width;
     private String score;
@@ -20,12 +21,12 @@ public class RealbooruResponseDTO implements IResponseDTO {
     private int width;
 
     @JsonProperty("directory")
-    public int getDirectory() {
+    public String getDirectory() {
         return directory;
     }
 
     @JsonProperty("directory")
-    public void setDirectory(int directory) {
+    public void setDirectory(String directory) {
         this.directory = directory;
     }
 
@@ -110,12 +111,12 @@ public class RealbooruResponseDTO implements IResponseDTO {
     }
 
     @JsonProperty("sample")
-    public int getSample() {
+    public boolean getSample() {
         return sample;
     }
 
     @JsonProperty("sample")
-    public void setSample(int sample) {
+    public void setSample(boolean sample) {
         this.sample = sample;
     }
 
@@ -140,12 +141,12 @@ public class RealbooruResponseDTO implements IResponseDTO {
     }
 
     @JsonProperty("score")
-    public String getScore() {
+    public String getScoreString() {
         return score;
     }
 
     @JsonProperty("score")
-    public void setScore(String score) {
+    public void setScoreString(String score) {
         this.score = score;
     }
 
@@ -169,14 +170,8 @@ public class RealbooruResponseDTO implements IResponseDTO {
         this.width = width;
     }
 
-    @Override
     public String getFileUrl() {
-        return String.format("https://realbooru.com/images/%s/%s", directory, image);
-    }
-
-    @Override
-    public String getScoreString() {
-        return score;
+        return baseFileUrl + directory + "/" + image;
     }
 
     @Override

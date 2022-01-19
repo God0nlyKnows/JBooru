@@ -14,14 +14,14 @@ import com.god0nlyknows.jbooru.dto.IResponseDTO;
 
 public class E926GetPosts extends GetPostsBase implements IGetPosts {
 
-    private int limit = 320;   //max per request
+    private int limit = 320; // max per request
     private int page = 1;
-
 
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        return sendRequest(String.format("https://e926.net/posts.json?limit=%s&page=%s&tags=%s",limit,page,tag), E926ResponseDTO[].class);
+        return sendRequest(String.format("https://e926.net/posts.json?limit=%s&page=%s&tags=%s", limit, page, tag),
+                E926ResponseDTO[].class);
     }
 
     @Override
@@ -34,33 +34,35 @@ public class E926GetPosts extends GetPostsBase implements IGetPosts {
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            ObjectMapper om=new ObjectMapper();
+            ObjectMapper om = new ObjectMapper();
             JsonNode jsonResponse = om.readTree(response.body());
-            
+
             List<IResponseDTO> posts = new ArrayList<IResponseDTO>();
             for (JsonNode node : jsonResponse.get("posts")) {
                 posts.add(new E926ResponseDTO(
                         node.get("file").get("url").textValue(),
                         node.get("score").get("total").textValue(),
                         node.get("rating").textValue(),
-                        getAllStrings(node.get("tags").get("artist")," "),
-                        getAllStrings(node.get("sources")," "),
-                        getAllStrings(node.get("tags").get("character")," ") +" "+ getAllStrings(node.get("tags").get("general")," ") +" "+ getAllStrings(node.get("tags").get("meta")," ") +" "+ getAllStrings(node.get("tags").get("species")," ") 
-                        
-                        ));
+                        getAllStrings(node.get("tags").get("artist"), " "),
+                        getAllStrings(node.get("sources"), " "),
+                        getAllStrings(node.get("tags").get("character"), " ") + " "
+                                + getAllStrings(node.get("tags").get("general"), " ") + " "
+                                + getAllStrings(node.get("tags").get("meta"), " ") + " "
+                                + getAllStrings(node.get("tags").get("species"), " ")
 
-                return posts;
+                ));
+
             }
+            return posts;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return List.of();
     }
 
     public int getLimit() {
         return limit;
     }
-
 
     public void setLimit(int limit) {
         this.limit = limit;
@@ -69,7 +71,6 @@ public class E926GetPosts extends GetPostsBase implements IGetPosts {
     public int getPage() {
         return page;
     }
-
 
     public void setPage(int page) {
         this.page = page;

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.god0nlyknows.jbooru.dto.IResponseDTO;
 
 public abstract class GetPostsBase {
-    protected <T> List<IResponseDTO> sendRequest(String url, Class<T> clazz){
+    protected <T> List<IResponseDTO> sendRequest(String url, Class<T> clazz) {
         var client = HttpClient.newHttpClient();
 
         var request = HttpRequest.newBuilder(
@@ -20,22 +20,22 @@ public abstract class GetPostsBase {
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            ObjectMapper om=new ObjectMapper();
-            return List.of((IResponseDTO[]) om.readValue(response.body().toString(),clazz));
-            
+            ObjectMapper om = new ObjectMapper();
+            return List.of((IResponseDTO[]) om.readValue(response.body().toString(), clazz));
+
         } catch (Exception e) {
-            return null;
+            return List.of();
         }
     }
 
-    protected String getAllStrings(JsonNode arrNode,String delimeter){
+    protected String getAllStrings(JsonNode arrNode, String delimeter) {
         String result = "";
         if (arrNode.isArray()) {
             for (final JsonNode objNode : arrNode) {
                 result += objNode + delimeter;
             }
-            if(result.length() > 0){
-                result = result.substring(0,result.length()-1);
+            if (result.length() > 0) {
+                result = result.substring(0, result.length() - 1);
             }
         }
         return result;

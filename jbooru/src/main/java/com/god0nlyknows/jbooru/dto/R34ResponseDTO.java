@@ -212,6 +212,6 @@ public class R34ResponseDTO implements IResponseDTO {
 
     @Override
     public String getSource() {
-        return null;
+        return "";
     }
 }

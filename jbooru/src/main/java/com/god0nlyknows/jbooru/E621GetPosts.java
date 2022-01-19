@@ -14,14 +14,14 @@ import com.god0nlyknows.jbooru.dto.IResponseDTO;
 
 public class E621GetPosts extends GetPostsBase implements IGetPosts {
 
-    private int limit = 320;   //max per request
+    private int limit = 320; // max per request
     private int page = 1;
-
 
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        return sendRequest(String.format("https://e621.net/posts.json?limit=%s&page=%s&tags=%s",limit,page,tag), E621ResponseDTO[].class);
+        return sendRequest(String.format("https://e621.net/posts.json?limit=%s&page=%s&tags=%s", limit, page, tag),
+                E621ResponseDTO[].class);
     }
 
     @Override
@@ -32,37 +32,37 @@ public class E621GetPosts extends GetPostsBase implements IGetPosts {
                 URI.create(url))
                 .header("accept", "application/json")
                 .build();
-                JsonNode jsonResponse = null;
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            ObjectMapper om=new ObjectMapper();
-            jsonResponse = om.readTree(response.body());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            ObjectMapper om = new ObjectMapper();
+            JsonNode jsonResponse = om.readTree(response.body());
+
             List<IResponseDTO> posts = new ArrayList<IResponseDTO>();
             for (JsonNode node : jsonResponse.get("posts")) {
                 posts.add(new E621ResponseDTO(
                         node.get("file").get("url").textValue(),
                         node.get("score").get("total").textValue(),
                         node.get("rating").textValue(),
-                        getAllStrings(node.get("tags").get("artist")," "),
-                        getAllStrings(node.get("sources")," "),
-                        getAllStrings(node.get("tags").get("character")," ") +" "+ getAllStrings(node.get("tags").get("general")," ") +" "+ getAllStrings(node.get("tags").get("meta")," ") +" "+ getAllStrings(node.get("tags").get("species")," ") 
-                        
-                        ));
+                        getAllStrings(node.get("tags").get("artist"), " "),
+                        getAllStrings(node.get("sources"), " "),
+                        getAllStrings(node.get("tags").get("character"), " ") + " "
+                                + getAllStrings(node.get("tags").get("general"), " ") + " "
+                                + getAllStrings(node.get("tags").get("meta"), " ") + " "
+                                + getAllStrings(node.get("tags").get("species"), " ")
 
-                return posts;
+                ));
+
             }
-        
-        return null;
+            return posts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return List.of();
     }
-    
 
     public int getLimit() {
         return limit;
     }
-
 
     public void setLimit(int limit) {
         this.limit = limit;
@@ -71,7 +71,6 @@ public class E621GetPosts extends GetPostsBase implements IGetPosts {
     public int getPage() {
         return page;
     }
-
 
     public void setPage(int page) {
         this.page = page;
