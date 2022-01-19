@@ -1,12 +1,10 @@
-package com.god0nlyknows.jbooru;
+# JBooru
+A package that download a crucial info about posts from booru sites
 
-import java.util.List;
 
-import com.god0nlyknows.jbooru.dto.IResponseDTO;
-
-public class App {
-    public static void main(String[] args) {
-        List<IGetPosts> r34 = List.of(
+### Example Usage
+```
+ List<IGetPosts> r34 = List.of(
                 new DanbooruGetPosts(),
                 new E621GetPosts(),
                 new E926GetPosts(),
@@ -19,13 +17,13 @@ public class App {
                 new YandeGetPosts());
         for (IGetPosts iGetPosts : r34) {
             try {
-                List<IResponseDTO> res = iGetPosts.getPosts("thighhighs");
+                List<IResponseDTO> res = iGetPosts.getPosts("tag_name");
                 if (res.size() > 0) {
                     System.out.println(res.size());
                     System.out.println(res.get(0).getFileUrl());
                 }
                 iGetPosts.setPage(2);
-                res = iGetPosts.getPosts("thighhighs");
+                res = iGetPosts.getPosts("tag_name");
                 if (res.size() > 0) {
                     System.out.println(res.size());
                     System.out.println(res.get(0).getFileUrl());
@@ -35,5 +33,4 @@ public class App {
             }
 
         }
-    }
-}
+```
