@@ -42,8 +42,8 @@ A package that download a crucial info about posts from most popular booru sites
   <groupId>com.god0nlyknows.jbooru</groupId>
   <artifactId>jbooru</artifactId>
   <version>CURRENTVERSION</version>
-	 <scope>system</scope>
-	 <systemPath>${project.basedir}/lib/JARFILE.jar</systemPath>
+  <scope>system</scope>
+  <systemPath>${project.basedir}/lib/JARFILE.jar</systemPath>
 </dependency>
 ```
 
