@@ -12,9 +12,9 @@ public class SafebooruGetPosts extends GetPostsBase implements IGetPosts {
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        return sendRequest(String.format(
-                "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&limit=%s&pid=%s&tags=%s~", limit,
-                page, tag), SafebooruResponseDTO[].class);
+        var posts1 = sendRequest(String.format("https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&limit=%s&pid=%s&tag=%s", limit,page, tag), SafebooruResponseDTO[].class);
+        var posts2 = sendRequest(String.format("https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&limit=%s&pid=%s&tags=%s", limit,page, tag), SafebooruResponseDTO[].class);
+        return (posts1.size()>posts2.size())?posts1:posts2;
     }
 
     public int getLimit() {

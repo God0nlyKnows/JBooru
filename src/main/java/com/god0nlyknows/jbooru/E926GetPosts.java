@@ -20,8 +20,10 @@ public class E926GetPosts extends GetPostsBase implements IGetPosts {
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        return sendRequest(String.format("https://e926.net/posts.json?limit=%s&page=%s&tags=%s", limit, page, tag),
-                E926ResponseDTO[].class);
+        var posts1 = sendRequest(String.format("https://e926.net/posts.json?limit=%s&page=%s&tag=%s", limit, page, tag), E926ResponseDTO[].class);
+        var posts2 = sendRequest(String.format("https://e926.net/posts.json?limit=%s&page=%s&tags=%s", limit, page, tag), E926ResponseDTO[].class);
+
+        return (posts1.size()>posts2.size())?posts1:posts2;
     }
 
     @Override

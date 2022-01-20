@@ -14,7 +14,9 @@ public class KonachanGetPosts extends GetPostsBase implements IGetPosts {
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        return sendRequest(String.format("https://konachan.com/post.json?limit=%s&page=%s&tags=%s",limit,page,tag), KonachanResponseDTO[].class);
+        var posts1 = sendRequest(String.format("https://konachan.com/post.json?limit=%s&page=%s&tag=%s",limit,page,tag), KonachanResponseDTO[].class);
+        var posts2 = sendRequest(String.format("https://konachan.com/post.json?limit=%s&page=%s&tags=%s",limit,page,tag), KonachanResponseDTO[].class);
+        return (posts1.size()>posts2.size())?posts1:posts2;
     }
 
     
