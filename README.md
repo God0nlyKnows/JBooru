@@ -1,6 +1,8 @@
 # JBooru
 A package that download a crucial info about posts from most popular booru sites
 
+### Jar file
+You can get latest jar file from Releases
 
 ### Example Usage
 ```
