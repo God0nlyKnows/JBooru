@@ -35,6 +35,18 @@ A package that download a crucial info about posts from most popular booru sites
         }
 ```
 
+### Local jar install (Maven)
+
+```
+<dependency>
+  <groupId>com.god0nlyknows.jbooru</groupId>
+  <artifactId>jbooru</artifactId>
+  <version>CURRENTVERSION</version>
+	 <scope>system</scope>
+	 <systemPath>${project.basedir}/lib/JARFILE.jar</systemPath>
+</dependency>
+```
+
 ### Available Sites
 
 <ul>
