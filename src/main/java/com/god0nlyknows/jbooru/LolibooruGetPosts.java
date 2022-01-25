@@ -20,9 +20,10 @@ public class LolibooruGetPosts extends GetPostsBase implements IGetPosts {
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        var posts1 = sendRequest(String.format("https://lolibooru.moe/post/index.json?limit=%s&page=%s&tag=%s", limit, page, tag),LolibooruResponseDTO[].class);
+        //var posts1 = sendRequest(String.format("https://lolibooru.moe/post/index.json?limit=%s&page=%s&tag=%s", limit, page, tag),LolibooruResponseDTO[].class);
         var posts2 = sendRequest(String.format("https://lolibooru.moe/post/index.json?limit=%s&page=%s&tags=%s", limit, page, tag),LolibooruResponseDTO[].class);
-        return (posts1.size()>posts2.size())?posts1:posts2;
+        //return (posts1.size()>posts2.size())?posts1:posts2;
+        return posts2;
     }
 
     @Override

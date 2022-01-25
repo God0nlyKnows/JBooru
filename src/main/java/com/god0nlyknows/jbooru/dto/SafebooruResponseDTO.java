@@ -3,7 +3,7 @@ package com.god0nlyknows.jbooru.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SafebooruResponseDTO implements IResponseDTO {
-    private final String baseFileUrl = "https://safebooru.org/samples/";
+    private final String baseFileUrl = "https://safebooru.org/images/";
     private String directory;
     private String hash;
     private int height;

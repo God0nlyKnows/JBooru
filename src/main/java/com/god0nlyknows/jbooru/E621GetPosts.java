@@ -20,9 +20,10 @@ public class E621GetPosts extends GetPostsBase implements IGetPosts {
     @Override
     public List<IResponseDTO> getPosts(String tag) {
 
-        var posts1 = sendRequest(String.format("https://e621.net/posts.json?limit=%s&page=%s&tag=%s", limit, page, tag), E621ResponseDTO[].class);
+        //var posts1 = sendRequest(String.format("https://e621.net/posts.json?limit=%s&page=%s&tag=%s", limit, page, tag), E621ResponseDTO[].class);
         var posts2 = sendRequest(String.format("https://e621.net/posts.json?limit=%s&page=%s&tags=%s", limit, page, tag), E621ResponseDTO[].class);
-        return (posts1.size()>posts2.size())?posts1:posts2;
+        //return (posts1.size()>posts2.size())?posts1:posts2;
+        return posts2;
     }
 
     @Override
